@@ -20,7 +20,8 @@ public class ShowInfoService {
     private ShowInfoToPageMapper showInfoToPageMapper;
 
     public List<GpBean> getGpBenFromTab() {
-        return showInfoToPageMapper.getGpNameFormTable();
+        List<GpBean> gpNameFormTable = showInfoToPageMapper.getGpNameFormTable();
+        return gpNameFormTable;
     }
 
     public List<AllData> queryHistoryWithCode(String code) {
@@ -33,5 +34,13 @@ public class ShowInfoService {
 
     public List<AllData> queryThirtyDaysInfo(String code) {
         return showInfoToPageMapper.queryThirtyDaysInfo(code);
+    }
+
+    public List<String> getAllString() {
+        return showInfoToPageMapper.getAllNameFromZf();
+    }
+
+    public Integer getZfNumWithName(String name) {
+        return showInfoToPageMapper.getZfNum(name);
     }
 }

@@ -2,6 +2,7 @@ package com.hand.bgzyy.dao;
 
 import com.hand.bgzyy.bean.AllData;
 import com.hand.bgzyy.bean.GpBean;
+import com.hand.bgzyy.bean.ZhangFu;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +21,10 @@ public interface ShowInfoToPageMapper {
     List<AllData> queryHistoryInfoWithName(String name);
 
     List<AllData> queryThirtyDaysInfo(String code);
+
+    void insertZfToTable(ZhangFu zhangFu);
+
+    Integer getZfNum(String gpName);
+
+    List<String> getAllNameFromZf();
 }

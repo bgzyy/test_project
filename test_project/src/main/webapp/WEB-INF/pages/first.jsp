@@ -35,6 +35,7 @@
     </script>
 </head>
 <body>
+<h2 align="center">主页</h2>
 <form method="post" action="queryGpInfo.do" style="margin-left:9%">
     <input type="text" name="gpCodeOrName" placeholder="请输入股票代码或股票名"/>
     <input type="hidden" name="pageNum" value="1">

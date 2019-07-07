@@ -5,29 +5,24 @@ package com.hand.bgzyy.bean;
  * Date 2019/7/7.
  */
 public class ZhangFu {
-    private AllData allData;
+    private String gpName;
+    private String date;
     private double zf;
-    private Integer allNum;
 
-    public Integer getAllNum() {
-        return allNum;
+    public String getGpName() {
+        return gpName;
     }
 
-    public void setAllNum(Integer allNum) {
-        this.allNum = allNum;
+    public void setGpName(String gpName) {
+        this.gpName = gpName;
     }
 
-    public ZhangFu(AllData allData, double zf) {
-        this.allData = allData;
-        this.zf = zf;
+    public String getDate() {
+        return date;
     }
 
-    public AllData getAllData() {
-        return allData;
-    }
-
-    public void setAllData(AllData allData) {
-        this.allData = allData;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public double getZf() {
@@ -35,6 +30,12 @@ public class ZhangFu {
     }
 
     public void setZf(double zf) {
+        this.zf = zf;
+    }
+
+    public ZhangFu(String gpName, String date, double zf) {
+        this.gpName = gpName;
+        this.date = date;
         this.zf = zf;
     }
 }

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hand.bgzyy.dao.ShowInfoToPageMapper">
+    <insert id="insertZfToTable">
+        insert into good_zf (gp_name, date, zf)
+        values (#{gpName}, #{date}, #{zf});
+    </insert>
     <select id="getGpNameFormTable" resultType="com.hand.bgzyy.bean.GpBean">
-        select distinct gp_name, gp_code from all_info_tab group by gp_code
+        select distinct gp_name, gp_code from all_info_tab
     </select>
     <select id="queryHistoryInfoWithCode" resultType="com.hand.bgzyy.bean.AllData">
         select gp_name, gp_code, date, price from all_info_tab where gp_code = #{code}
@@ -12,5 +16,11 @@
     </select>
     <select id="queryThirtyDaysInfo" resultType="com.hand.bgzyy.bean.AllData">
         select gp_name, gp_code, date, price from all_info_tab where gp_code = #{code} limit 31;
+    </select>
+    <select id="getZfNum" resultType="java.lang.Integer">
+        SELECT count(id) FROM good_zf WHERE zf > 5 and gp_name = #{gpName};
+    </select>
+    <select id="getAllNameFromZf" resultType="java.lang.String">
+        SELECT distinct gp_name FROM good_zf;
     </select>
 </mapper>

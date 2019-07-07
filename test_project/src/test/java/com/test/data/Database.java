@@ -2,8 +2,11 @@ package com.test.data;
 
 import com.hand.bgzyy.bean.AllData;
 import com.hand.bgzyy.bean.GpBean;
+import com.hand.bgzyy.bean.ZhangFu;
 import com.hand.bgzyy.dao.ProductMapper;
 import com.hand.bgzyy.dao.ShowInfoToPageMapper;
+import com.hand.bgzyy.service.ProductService;
+import com.hand.bgzyy.service.ShowInfoService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -28,9 +31,13 @@ public class Database {
     private DataSource dataSource;
     private ProductMapper productMapper;
     private ShowInfoToPageMapper showInfoToPageMapper;
+    private ProductService productService;
+    private ShowInfoService showInfoService;
 
     {
         context = new ClassPathXmlApplicationContext("Spring_config.xml");
+        productService = context.getBean(ProductService.class);
+        showInfoService = context.getBean(ShowInfoService.class);
         dataSource = context.getBean(DataSource.class);
         productMapper = context.getBean(ProductMapper.class);
         showInfoToPageMapper = context.getBean(ShowInfoToPageMapper.class);
@@ -112,6 +119,27 @@ public class Database {
         for (int i = 0; i < allDataList.size() - 1; i++) {
             result = (allDataList.get(i).getPrice() - allDataList.get(i + 1).getPrice()) / allDataList.get(i + 1).getPrice();
             System.out.println(result * 100 + " --> " + (double)Math.round(result * 100 * 100) / 100);
+        }
+    }
+
+    @Test
+    public void test() {
+        List<Integer> allCodeFromTab = productService.getAllCodeFromTab();
+        List<List<ZhangFu>> allZhangFuList = new ArrayList<>();
+        for (Integer code : allCodeFromTab) {
+            List<AllData> allDataList = showInfoService.queryThirtyDaysInfo(code.toString());
+            calculate(allDataList);
+        }
+    }
+
+    public void calculate(List<AllData> allDataList) {
+        double result;
+        for (int i = 0; i < allDataList.size() - 1; i++) {
+            result = (allDataList.get(i).getPrice() - allDataList.get(i + 1).getPrice()) / allDataList.get(i + 1).getPrice();
+            result = (double) Math.round(result * 100 * 100) / 100;
+            if (result > 5) {
+                showInfoToPageMapper.insertZfToTable(new ZhangFu(allDataList.get(i).getGpName(), allDataList.get(i).getDate(), result));
+            }
         }
     }
 }

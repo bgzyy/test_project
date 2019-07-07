@@ -12,10 +12,15 @@
     <title>历史涨幅信息</title>
 </head>
 <body>
-<c:forEach items="${allZhangFuList}" var="goodZhangFuList">
-    <c:forEach items="${goodZhangFuList}" var="goodZhangFu">
-        ${goodZhangFu.allData.gpName} --> ${goodZhangFu.allData.date}<br>
+<div align="center">
+    <h2>股票前三十天涨幅超过百分之五的次数</h2>
+    <a href="getPageInfo.do?pageNum=1">返回主页</a><br><br>
+    <c:forEach items="${pageList}" var="page" varStatus="status">
+        ${page.name}->${page.count} 次&nbsp;
+        <c:if test="${status.count % 6 == 0}">
+            <br><br/>
+        </c:if>
     </c:forEach>
-</c:forEach>
+</div>
 </body>
 </html>

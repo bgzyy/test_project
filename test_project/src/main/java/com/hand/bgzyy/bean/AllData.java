@@ -1,7 +1,5 @@
 package com.hand.bgzyy.bean;
 
-import java.sql.Date;
-
 /**
  * Created by zhao'yin
  * Date 2019/7/5.

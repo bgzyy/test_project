@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.hand.bgzyy.bean.AllData;
 import com.hand.bgzyy.bean.GpBean;
 import com.hand.bgzyy.bean.ZhangFu;
+import com.hand.bgzyy.bean.ZhangFuPage;
 import com.hand.bgzyy.service.ProductService;
 import com.hand.bgzyy.service.ShowInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,27 +67,14 @@ public class ShowInfoController {
     @RequestMapping("getAllZhangFuInfo")
     public ModelAndView getAllThirtyDaysInfo() {
         ModelAndView modelAndView = new ModelAndView("ZhangFu");
-        List<Integer> allCodeFromTab = productService.getAllCodeFromTab();
-        List<List<ZhangFu>> allZhangFuList = new ArrayList<>();
-        for (Integer code : allCodeFromTab) {
-            List<AllData> allDataList = showInfoService.queryThirtyDaysInfo(code.toString());
-            List<ZhangFu> calculate = calculate(allDataList);
-            allZhangFuList.add(calculate);
+        List<String> allName = showInfoService.getAllString();
+        List<ZhangFuPage> pageList = new ArrayList<>();
+        for (String name : allName) {
+            Integer zfCount = showInfoService.getZfNumWithName(name);
+            ZhangFuPage zhangFuPage = new ZhangFuPage(name, zfCount);
+            pageList.add(zhangFuPage);
         }
-        modelAndView.addObject("allZhangFuList", allZhangFuList);
+        modelAndView.addObject("pageList", pageList);
         return modelAndView;
-    }
-
-    public List<ZhangFu> calculate(List<AllData> allDataList) {
-        double result;
-        List<ZhangFu> zhangFuList = new ArrayList<>();
-        for (int i = 0; i < allDataList.size() - 1; i++) {
-            result = (allDataList.get(i).getPrice() - allDataList.get(i + 1).getPrice()) / allDataList.get(i + 1).getPrice();
-            result = (double) Math.round(result * 100 * 100) / 100;
-            if (result > 5) {
-                zhangFuList.add(new ZhangFu(allDataList.get(i), result));
-            }
-        }
-        return zhangFuList;
     }
 }
