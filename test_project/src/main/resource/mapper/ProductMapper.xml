@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.bgzyy.dao.ProductMapper">
+
+    <!--<insert id="insertToGpTab" useGeneratedKeys="true" keyProperty="id" keyColumn="id"-->
+    <!--parameterType="com.hand.bgzyy.bean.GpBean">-->
+    <!--INSERT INTO gp_tab (gp_name, gp_code)-->
+    <!--VALUES (#{gpName}, #{gpCode});-->
+    <!--</insert>-->
+    <insert id="insertListToInfoTab" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="com.hand.bgzyy.bean.Product">
+        INSERT INTO all_info_tab (gp_name, gp_code, date, price) VALUES
+        <foreach item="item" collection="list" index="index" separator=",">
+            (#{item.gpName}, #{item.gpCode}, #{item.date}, #{item.price})
+        </foreach>
+    </insert>
+    <insert id="insertToInfoTab">
+        INSERT INTO all_info_tab (gp_name, gp_code, date, price)
+        VALUES (#{gpName}, #{gpCode}, #{date}, #{price})
+    </insert>
+    <select id="getCodeFromTab" resultType="java.lang.Integer">
+        select distinct gp_code from all_info_tab;
+    </select>
+</mapper>
